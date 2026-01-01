@@ -4,8 +4,9 @@ import { RightModal } from '../../RightModal/RightModal';
 import { CONTACT_PHONE_NUMBER, API_URL, WHATSAPP_URL } from '../../../utils/constants';
 import styles from './ShoppingCartModal.module.scss';
 import { Button } from '../../Button/Button';
+import { CartProduct, CartItem, ProductDTO } from '../../../types';
 
-const getProductsByIds = async ids => {
+const getProductsByIds = async (ids: string[]): Promise<ProductDTO[]> => {
   const response = await fetch(`${API_URL}/Product/GetByIds`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -15,17 +16,23 @@ const getProductsByIds = async ids => {
   return await response.json();
 };
 
-const productMapping = product => {
+const productMapping = (product: CartProduct): CartItem => {
   return {
     id: product.uuid,
-    image: product.images.length === 0 ? '' : product.images[0],
+    image: product.images.length === 0 ? '' : product.images[0] || '',
     name: product.name,
     amount: product.amount,
     price: product.price,
   };
 };
 
-const ShoppingCartModal = ({ onClose, items, itemsOnChange }) => {
+interface ShoppingCartModalProps {
+  onClose: () => void;
+  items: CartItem[];
+  itemsOnChange: (items: CartItem[]) => void;
+}
+
+const ShoppingCartModal: React.FC<ShoppingCartModalProps> = ({ onClose, items, itemsOnChange }) => {
   const makeOrder = useCallback(() => {
     let url = `${WHATSAPP_URL}/${CONTACT_PHONE_NUMBER.value}?text=`;
     items.forEach(

@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const ShoppingCartButton: React.FC<IProps> = ({ onClick }) => {
-  const [shoppingCart, setShoppingCart] = useLocalStorage('shoppingCart', []);
+  const [shoppingCart] = useLocalStorage('shoppingCart', []);
 
   return (
     <div className={styles['cart-button']} onClick={onClick}>

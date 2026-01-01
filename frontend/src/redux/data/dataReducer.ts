@@ -1,13 +1,34 @@
-import { SET_FILTER_DATA, SET_FULL_DATA, SET_ACTIVE_CATEGORY, SET_SEARCH_DATA } from './dataTypes';
+import {
+  SET_FILTER_DATA,
+  SET_FULL_DATA,
+  SET_ACTIVE_CATEGORY,
+  SET_SEARCH_DATA,
+} from './dataTypes';
+import { ProductDTO } from '../../types';
 
-const INITIAL_STATE = {
+interface DataState {
+  filterData: ProductDTO[];
+  fullData: ProductDTO[];
+  searchData: ProductDTO[];
+  activeCategory: string;
+}
+
+interface DataAction {
+  type: string;
+  payload?: any;
+}
+
+const INITIAL_STATE: DataState = {
   filterData: [],
   fullData: [],
   searchData: [],
   activeCategory: 'default',
 };
 
-const dataReducer = (state = INITIAL_STATE, action) => {
+const dataReducer = (
+  state: DataState = INITIAL_STATE,
+  action: DataAction
+): DataState => {
   switch (action.type) {
     case SET_FILTER_DATA:
       return { ...state, filterData: action.payload };
@@ -23,3 +44,4 @@ const dataReducer = (state = INITIAL_STATE, action) => {
 };
 
 export default dataReducer;
+

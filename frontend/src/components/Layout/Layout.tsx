@@ -6,7 +6,11 @@ import { FavoritesModal } from '../FavoritesModal/FavoritesModal';
 import { MobileMenu } from '../MobileMenu/MobileMenu';
 import Footer from './Footer/Footer';
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div style={{ background: '#fbfbfb' }}>
       <HeaderSearch />
@@ -21,3 +25,4 @@ const Layout = ({ children }) => {
 };
 
 export { Layout };
+

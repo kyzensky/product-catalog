@@ -5,6 +5,7 @@ import { filteredProductsByCategory } from '../../../utils/filter';
 import Container from '../../Container/Container';
 import { NavLink, useHistory } from 'react-router-dom';
 import { setFilterData, setActiveCategory, setSearchData } from '../../../redux/data/dataActions';
+import { RootState } from '../../../redux/store';
 
 const categories = [
   { name: 'Жидкости', link: '/liquid' },
@@ -14,12 +15,12 @@ const categories = [
   { name: 'Испарители', link: 'evaporator' },
 ];
 
-const HeaderCategory = () => {
-  const { activeCategory, fullData } = useSelector(({ data }) => data);
+const HeaderCategory: React.FC = () => {
+  const { activeCategory, fullData } = useSelector((state: RootState) => state.data);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onClickActiveCategory = category => {
+  const onClickActiveCategory = (category: string) => {
     history.push('/categories');
     const filter = filteredProductsByCategory(fullData, category);
     dispatch(setActiveCategory(category));
@@ -53,3 +54,4 @@ const HeaderCategory = () => {
 };
 
 export default HeaderCategory;
+

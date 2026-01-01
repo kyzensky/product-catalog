@@ -1,8 +1,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Card.module.scss';
+import { ProductDTO } from '../../../types';
 
-const Card = ({ data }) => {
+interface CardProps {
+  data: ProductDTO;
+  id: number;
+}
+
+const Card: React.FC<CardProps> = ({ data }) => {
   const [eng] = data.name.split('(');
 
   return (
@@ -30,3 +36,4 @@ const Card = ({ data }) => {
 };
 
 export default Card;
+

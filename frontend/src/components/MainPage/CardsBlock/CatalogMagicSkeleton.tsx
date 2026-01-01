@@ -1,6 +1,22 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
+interface CatalogMagicProps {
+  width?: number;
+  heading?: { width: number; height: number };
+  row?: number;
+  column?: number;
+  padding?: number;
+  borderRadius?: number;
+}
+
+interface CatalogMagicMetadata {
+  name: string;
+  github: string;
+  description: string;
+  filename: string;
+}
+
 const CatalogMagic = ({
   width = 1366,
   heading = { width: 140, height: 24 },
@@ -9,10 +25,10 @@ const CatalogMagic = ({
   padding = 20,
   borderRadius = 0,
   ...props
-}) => {
-  const list = [];
+}: CatalogMagicProps) => {
+  const list: React.ReactElement[] = [];
 
-  let height;
+  let height: number | undefined;
 
   for (let i = 1; i <= row; i++) {
     for (let j = 0; j < column; j++) {
@@ -59,11 +75,12 @@ const CatalogMagic = ({
   );
 };
 
-CatalogMagic.metadata = {
+(CatalogMagic as React.FC<CatalogMagicProps> & { metadata: CatalogMagicMetadata }).metadata = {
   name: 'I am Doong - I come from Việt Nam',
   github: 'toiladoong',
   description: 'CatalogMagic',
   filename: 'CatalogMagic',
 };
 
-export default CatalogMagic;
+export default CatalogMagic as React.FC<CatalogMagicProps> & { metadata: CatalogMagicMetadata };
+

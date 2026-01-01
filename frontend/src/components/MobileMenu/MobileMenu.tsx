@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
 
 import { setActiveCategory, setFilterData, setSearchData } from '../../redux/data/dataActions';
 import { filteredProductsByCategory } from '../../utils/filter';
@@ -8,17 +7,18 @@ import { setVisibleModal as setVisibleFavoritesModal } from '../../redux/favorit
 import { setVisibleModal as setVisibleMobileModal } from '../../redux/mobileMenu';
 import { CONTACT_PHONE_NUMBER, SOCIAL_MEDIA } from '../../utils/constants';
 import styles from './MobileMenu.module.scss';
+import { RootState } from '../../redux/store';
 
-const MobileMenu = () => {
-  const isVisible = useSelector((state: any) => state.mobileMenu.isVisibleModal);
+const MobileMenu: React.FC = () => {
+  const isVisible = useSelector((state: RootState) => state.mobileMenu.isVisibleModal);
   const dispatch = useDispatch();
-  const fullData = useSelector((state: any) => state.data.fullData);
+  const fullData = useSelector((state: RootState) => state.data.fullData);
 
   const hide = () => {
     dispatch(setVisibleMobileModal(false));
   };
 
-  const chooseCategory = category => {
+  const chooseCategory = (category: string) => {
     const filter = filteredProductsByCategory(fullData, category);
     dispatch(setActiveCategory(category));
     dispatch(setFilterData(filter));
@@ -67,6 +67,8 @@ const MobileMenu = () => {
       </div>
     );
   }
+  
+  return null;
 };
 
 export { MobileMenu };

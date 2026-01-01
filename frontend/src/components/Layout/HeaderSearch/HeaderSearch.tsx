@@ -7,7 +7,7 @@ import { SOCIAL_MEDIA } from '../../../utils/constants';
 import { setVisibleModal } from '../../../redux/mobileMenu';
 import { Logo } from '../../Logo/Logo';
 
-const HeaderSearch = () => {
+const HeaderSearch: React.FC = () => {
   const dispatch = useDispatch();
 
   return (
@@ -27,8 +27,12 @@ const HeaderSearch = () => {
           <CustomSearch />
           <div className={classes.iconsContainer}>
             {Object.keys(SOCIAL_MEDIA).map((key, index) => (
-              <a key={index} href={SOCIAL_MEDIA[key].href}>
-                <img className={classes.mainIcon} src={SOCIAL_MEDIA[key].mainSrc} alt="icon" />
+              <a key={index} href={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].href}>
+                <img
+                  className={classes.mainIcon}
+                  src={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].mainSrc}
+                  alt="icon"
+                />
               </a>
             ))}
           </div>
@@ -38,3 +42,4 @@ const HeaderSearch = () => {
   );
 };
 export default HeaderSearch;
+

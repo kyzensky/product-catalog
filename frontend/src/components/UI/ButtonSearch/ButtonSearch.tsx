@@ -1,17 +1,21 @@
 import React from 'react';
 import classes from './ButtonSearch.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterData, setFullData } from '../../../redux/data/dataActions';
-import { filterData, filteredProductsBySearch } from '../../../utils/filter';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { setFilterData } from '../../../redux/data/dataActions';
+import { filteredProductsBySearch } from '../../../utils/filter';
+import { useHistory } from 'react-router-dom';
 
-const ButtonSearch = ({ searchText, setSearchText, setOpenSearch }) => {
+interface ButtonSearchProps {
+  searchText: string;
+  setOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ButtonSearch: React.FC<ButtonSearchProps> = ({ searchText, setOpenSearch }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { fullData } = useSelector(({ data }: any) => data);
 
   const onClickButtonSearch = () => {
-    console.log('click');
     dispatch(setFilterData(filteredProductsBySearch(fullData, searchText)));
     setOpenSearch(false);
     history.push(``);

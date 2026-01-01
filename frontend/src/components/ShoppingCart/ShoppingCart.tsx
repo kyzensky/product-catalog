@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_VISIBLE_MODAL } from '../../redux/shoppingCart';
 import { ShoppingCartButton } from './ShoppingCartButton/ShoppingCartButton';
@@ -9,23 +9,26 @@ import {
 } from './ShoppingCartModal/ShoppingCartModal';
 import { LOCALSTORAGE_KEYS } from '../../utils/constants';
 import { useLocalStorage } from 'usehooks-ts';
+import { ShoppingCartItem, CartItem } from '../../types';
+import { RootState } from '../../redux/store';
 
 const ShoppingCart = () => {
-  const isVisible = useSelector((state: any) => state.shoppingCart.isVisibleModal);
+  const isVisible = useSelector((state: RootState) => state.shoppingCart.isVisibleModal);
   const dispatch = useDispatch();
-  const [shoppingCart, setShoppingCart] = useLocalStorage<any[]>(
+  const [shoppingCart, setShoppingCart] = useLocalStorage<ShoppingCartItem[]>(
     LOCALSTORAGE_KEYS.shoppingCart,
     []
   );
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    getProductsByIds(shoppingCart.map((p: any) => p.id)).then(data =>
+    getProductsByIds(shoppingCart.map((p) => p.id)).then(data =>
       setItems(
         data.map(v => {
+          const cartItem = shoppingCart.find((itm) => itm.id === v.uuid);
           return productMapping({
             ...v,
-            amount: shoppingCart.find((itm: any) => itm.id === v.uuid).amount,
+            amount: cartItem?.amount || 0,
           });
         })
       )
@@ -35,8 +38,8 @@ const ShoppingCart = () => {
   return isVisible ? (
     <ShoppingCartModal
       onClose={() => dispatch({ type: SET_VISIBLE_MODAL, payload: false })}
-      itemsOnChange={items => {
-        setShoppingCart(items);
+      itemsOnChange={(items) => {
+        setShoppingCart(items.map(item => ({ id: item.id, amount: item.amount })));
       }}
       items={items}
     />

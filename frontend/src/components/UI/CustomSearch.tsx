@@ -6,18 +6,19 @@ import { setSearchData } from '../../redux/data/dataActions';
 import { useHistory } from 'react-router-dom';
 import { filteredProductsBySearch } from '../../utils/filter';
 import ButtonSearch from './ButtonSearch/ButtonSearch';
+import { RootState } from '../../redux/store';
 
-const SelectSearch = () => {
-  const [openSearch, setOpenSearch] = React.useState(false);
-  const [searchText, setSearchText] = React.useState('');
-  const inputRef = React.useRef(null);
-  const { fullData, searchData } = useSelector(({ data }) => data);
+const SelectSearch: React.FC = () => {
+  const [openSearch, setOpenSearch] = React.useState<boolean>(false);
+  const [searchText, setSearchText] = React.useState<string>('');
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const { fullData, searchData } = useSelector((state: RootState) => state.data);
   const dispatch = useDispatch();
   const history = useHistory();
 
   React.useEffect(() => {
-    const handleOutsideClick = event => {
-      if (inputRef.current && !inputRef.current.contains(event.target)) {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
         setOpenSearch(false);
       }
     };
@@ -29,7 +30,7 @@ const SelectSearch = () => {
     };
   }, []);
 
-  const onChangeSearch = ({ target }) => {
+  const onChangeSearch = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchData(filteredProductsBySearch(fullData, target.value)));
     setSearchText(target.value);
   };
@@ -40,7 +41,7 @@ const SelectSearch = () => {
   }, [searchText]);
 
   console.log('text', searchText, 'open', openSearch);
-  const onClickElementSearch = id => {
+  const onClickElementSearch = (id: string) => {
     setSearchText('');
     setOpenSearch(false);
     history.push(`/${id}`);
@@ -66,14 +67,13 @@ const SelectSearch = () => {
         />
         <ButtonSearch
           searchText={searchText}
-          setSearchText={setSearchText}
           setOpenSearch={setOpenSearch}
         />
       </div>
       <div className={classes[cn({ search: openSearch === true })]}>
         {openSearch &&
           searchData &&
-          searchData.map(value => {
+          searchData.map((value) => {
             return (
               <div
                 id={value.uuid}
@@ -94,3 +94,4 @@ const SelectSearch = () => {
 };
 
 export default SelectSearch;
+

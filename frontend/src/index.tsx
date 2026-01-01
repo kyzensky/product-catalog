@@ -2,9 +2,9 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import App from './App.js';
+import App from './App';
 
-const AppWithCallbackAfterRender = () => (
+const AppWithCallbackAfterRender: React.FC = () => (
   <React.StrictMode>
     <Provider store={store}>
       <App />
@@ -13,5 +13,8 @@ const AppWithCallbackAfterRender = () => (
 );
 
 const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(<AppWithCallbackAfterRender />);
+if (container) {
+  const root = createRoot(container);
+  root.render(<AppWithCallbackAfterRender />);
+}
+

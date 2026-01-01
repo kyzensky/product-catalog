@@ -10,21 +10,24 @@ import {
 import styles from './FavoritesModal.module.scss';
 import { LOCALSTORAGE_KEYS } from '../../utils/constants';
 import { useLocalStorage } from 'usehooks-ts';
+import { FavoriteItem, CartItem } from '../../types';
+import { RootState } from '../../redux/store';
 
-const FavoritesModal = () => {
-  const [favorites, setFavorites] = useLocalStorage<any>(LOCALSTORAGE_KEYS.favorites, []);
-  const [items, setItems] = useState<any>([]);
-  const isVisible = useSelector((state: any) => state.favorites.isVisibleModal);
+const FavoritesModal: React.FC = () => {
+  const [favorites, setFavorites] = useLocalStorage<FavoriteItem[]>(LOCALSTORAGE_KEYS.favorites, []);
+  const [items, setItems] = useState<CartItem[]>([]);
+  const isVisible = useSelector((state: RootState) => state.favorites.isVisibleModal);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProductsByIds(favorites.map((p: any) => p.id)).then(data =>
+    getProductsByIds(favorites.map((p) => p.id)).then(data =>
       setItems(
         data.map(v => {
+          const favoriteItem = favorites.find((itm) => itm.id === v.uuid);
           return productMapping({
             ...v,
-            amount: favorites.find((itm: any) => itm.id === v.uuid).amount,
+            amount: favoriteItem ? 1 : 0,
           });
         })
       )
@@ -38,13 +41,13 @@ const FavoritesModal = () => {
         onClose={() => dispatch({ type: SET_VISIBLE_MODAL, payload: false })}
       >
         {items.length > 0 ? (
-          items.map((i, index) => (
+          items.map((i, index: number) => (
             <div key={i.id} style={index + 1 !== items.length ? { marginBottom: '15px' } : {}}>
               <HorizontalProductCardWithQuantitySwitch
                 isQuantityChange={false}
                 quantityItem={i}
-                removeItemHandler={item => {
-                  setFavorites(items.filter(i => i.id !== item.id));
+                removeItemHandler={(item) => {
+                  setFavorites(favorites.filter((fav) => fav.id !== item.id));
                 }}
               />
             </div>
@@ -54,6 +57,8 @@ const FavoritesModal = () => {
         )}
       </RightModal>
     );
+  
+  return null;
 };
 
 export { FavoritesModal };

@@ -8,6 +8,8 @@ import { Button } from '../../components/Button/Button';
 import classes from './ProductCard.module.scss';
 import { ProductDTO } from '../../types';
 import { ShoppingCartItem, FavoriteItem } from '../../types';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { MdLocationOn } from 'react-icons/md';
 
 const ProductCard: React.FC = () => {
   const [responseData, setResponseData] = useState<ProductDTO | null>(null);
@@ -76,12 +78,16 @@ const ProductCard: React.FC = () => {
                   existsCurrentProductInFavorites() ? classes['active'] : ''
                 }`}
               >
-                <img className={classes['heart-icon']} src="./heard-icon.png" alt="" />
+                {existsCurrentProductInFavorites() ? (
+                  <AiFillHeart className={classes['heart-icon']} size={24} />
+                ) : (
+                  <AiOutlineHeart className={classes['heart-icon']} size={24} />
+                )}
               </button>
             </div>
             <div className={classes['product-description']}>{responseData.description}</div>
             <div className={classes['location']}>
-              <img src="./Vector.png" alt="" />
+              <MdLocationOn size={20} />
               <p className={classes['location-availability']}>Наличие в магазинах</p>
             </div>
             <div className={classes['product-availability']}>

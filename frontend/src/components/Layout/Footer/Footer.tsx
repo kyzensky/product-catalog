@@ -2,6 +2,7 @@ import * as React from 'react';
 import classes from './Footer.module.scss';
 import useWindowResize from '../../../hooks/UseWindowResize';
 import { CONTACT_PHONE_NUMBER, SOCIAL_MEDIA } from '../../../utils/constants';
+import { FaInstagram, FaTelegram, FaVk, FaPhone } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
   const { width } = useWindowResize();
@@ -11,10 +12,10 @@ const Footer: React.FC = () => {
       <div className={classes.footerContainer}>
         <div className={classes.elementContainer}>
           <a href={SOCIAL_MEDIA.telegram.href}>
-            <img width="13" height="13" src="../tg_icon.png" alt="Telegram" />
+            <FaTelegram size={13} />
           </a>
-          <a href={SOCIAL_MEDIA.instagram.href}>
-            <img style={{ marginLeft: '20px' }} width="13" height="13" src="../inst_icon.png" alt="Instagram" />
+          <a href={SOCIAL_MEDIA.instagram.href} style={{ marginLeft: '20px' }}>
+            <FaInstagram size={13} />
           </a>
         </div>
         <div className={classes.logo}>
@@ -22,10 +23,10 @@ const Footer: React.FC = () => {
         </div>
         <div className={classes.elementContainer}>
           <a href={SOCIAL_MEDIA.vk.href}>
-            <img width="13" height="13" src="../vk_icon.png" alt="VK" />
+            <FaVk size={13} />
           </a>
-          <a href={`tel:+${CONTACT_PHONE_NUMBER.value}`}>
-            <img style={{ marginLeft: '20px' }} width="13" height="13" src="../telephone.png" alt="Phone" />
+          <a href={`tel:+${CONTACT_PHONE_NUMBER.value}`} style={{ marginLeft: '20px' }}>
+            <FaPhone size={13} />
           </a>
         </div>
       </div>
@@ -37,7 +38,7 @@ const Footer: React.FC = () => {
       <div className={classes.footerContainer}>
         <a href={`tel:+${CONTACT_PHONE_NUMBER.value}`}>
           <div className={classes.elementContainer}>
-            <img className={classes.telephoneIcon} src="../telephone.png" alt="Phone" />
+            <FaPhone className={classes.telephoneIcon} size={24} />
             <div className={classes.telephone}>{CONTACT_PHONE_NUMBER.text}</div>
           </div>
         </a>

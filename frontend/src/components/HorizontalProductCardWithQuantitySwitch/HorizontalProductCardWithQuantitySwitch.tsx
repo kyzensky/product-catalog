@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './HorizontalProductCardWithQuantitySwitch.module.scss';
+import { FaPlus, FaMinus, FaTimes } from 'react-icons/fa';
 
 interface IProps {
   quantityItem: any;
@@ -32,7 +33,9 @@ const HorizontalProductCardWithQuantitySwitch: React.FC<IProps> = ({
                 if (downItemHandler) downItemHandler(quantityItem);
               }}
               className={`${styles['down-btn']} ${styles['change-amount-btn']}`}
-            ></div>
+            >
+              <FaMinus size={20} />
+            </div>
             <div className={styles['value']}>
               <span>{quantityItem.amount}</span>
             </div>
@@ -41,7 +44,9 @@ const HorizontalProductCardWithQuantitySwitch: React.FC<IProps> = ({
                 if (upItemHandler) upItemHandler(quantityItem);
               }}
               className={`${styles['up-btn']} ${styles['change-amount-btn']}`}
-            ></div>
+            >
+              <FaPlus size={20} />
+            </div>
           </div>
         )}
       </div>
@@ -51,7 +56,9 @@ const HorizontalProductCardWithQuantitySwitch: React.FC<IProps> = ({
         </div>
       )}
       <div onClick={() => removeItemHandler(quantityItem)} className={styles['remove-btn-wrapper']}>
-        <div className={styles['btn']}></div>
+        <div className={styles['btn']}>
+          <FaTimes size={24} />
+        </div>
       </div>
     </div>
   );

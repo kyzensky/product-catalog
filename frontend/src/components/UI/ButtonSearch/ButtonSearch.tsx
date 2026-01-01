@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFilterData } from '../../../redux/data/dataActions';
 import { filteredProductsBySearch } from '../../../utils/filter';
 import { useHistory } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 interface ButtonSearchProps {
   searchText: string;
@@ -23,7 +24,7 @@ const ButtonSearch: React.FC<ButtonSearchProps> = ({ searchText, setOpenSearch }
 
   return (
     <button onClick={onClickButtonSearch} className={classes['button-search']}>
-      <img className={classes['icon-search']} src="./search-30.png" alt="search" />
+      <FaSearch className={classes['icon-search']} size={15} />
     </button>
   );
 };

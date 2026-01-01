@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "skipLibCheck": true, // Skip type checking of declaration files to avoid react-icons type issues
     // project options
     "lib": ["ESNext", "dom"], // specifies which default set of type definitions to use ("DOM", "ES6", etc)
     "outDir": "lib", // .js (as well as .d.ts, .js.map, etc.) files will be emitted into this directory.,

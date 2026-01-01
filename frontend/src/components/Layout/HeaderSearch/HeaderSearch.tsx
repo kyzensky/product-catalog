@@ -6,6 +6,14 @@ import classes from './HeaderSearch.module.scss';
 import { SOCIAL_MEDIA } from '../../../utils/constants';
 import { setVisibleModal } from '../../../redux/mobileMenu';
 import { Logo } from '../../Logo/Logo';
+import { FaInstagram, FaTelegram, FaVk } from 'react-icons/fa';
+import { HiMenu } from 'react-icons/hi';
+
+const iconMap = {
+  instagram: FaInstagram,
+  telegram: FaTelegram,
+  vk: FaVk,
+};
 
 const HeaderSearch: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +25,9 @@ const HeaderSearch: React.FC = () => {
         <div
           onClick={() => dispatch(setVisibleModal(true))}
           className={classes['mobile-menu-icon']}
-        />
+        >
+          <HiMenu size={20} />
+        </div>
       </div>
       <Container>
         <div className={classes.headerSecondWrapper}>
@@ -26,15 +36,14 @@ const HeaderSearch: React.FC = () => {
           </div>
           <CustomSearch />
           <div className={classes.iconsContainer}>
-            {Object.keys(SOCIAL_MEDIA).map((key, index) => (
-              <a key={index} href={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].href}>
-                <img
-                  className={classes.mainIcon}
-                  src={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].mainSrc}
-                  alt="icon"
-                />
-              </a>
-            ))}
+            {Object.keys(SOCIAL_MEDIA).map((key, index) => {
+              const Icon = iconMap[key as keyof typeof iconMap];
+              return (
+                <a key={index} href={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].href}>
+                  <Icon className={classes.mainIcon} size={21} />
+                </a>
+              );
+            })}
           </div>
         </div>
       </Container>

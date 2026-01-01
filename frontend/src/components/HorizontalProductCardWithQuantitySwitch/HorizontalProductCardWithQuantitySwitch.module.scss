@@ -33,18 +33,21 @@
       align-items: center;
       margin-top: 10px;
       .change-amount-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 20px;
         height: 20px;
         transition: 0.1s;
         opacity: 0.5;
+        color: #000000;
         &:hover {
           cursor: pointer;
           opacity: 0.8;
         }
       }
       .down-btn {
-        background-image: url('../../image/minus-btn.png');
-        background-size: cover;
+        // Icon handled by component
       }
       .value {
         margin-left: 6px;
@@ -55,8 +58,7 @@
         font-size: 13px;
       }
       .up-btn {
-        background-image: url('../../image/plus-btn.png');
-        background-size: cover;
+        // Icon handled by component
       }
     }
   }
@@ -72,12 +74,14 @@
     display: flex;
     align-items: center;
     .btn {
-      background-image: url('../../image/circle-remove-btn.png');
-      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 24px;
       height: 24px;
       opacity: 0.5;
       transition: 0.1s;
+      color: #000000;
       &:hover {
         cursor: pointer;
         opacity: 0.8;

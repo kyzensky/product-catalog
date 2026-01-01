@@ -8,6 +8,8 @@ import { setVisibleModal as setVisibleMobileModal } from '../../redux/mobileMenu
 import { CONTACT_PHONE_NUMBER, SOCIAL_MEDIA } from '../../utils/constants';
 import styles from './MobileMenu.module.scss';
 import { RootState } from '../../redux/store';
+import { FaInstagram, FaTelegram, FaVk, FaPhone } from 'react-icons/fa';
+import { AiOutlineClose, AiOutlineHeart } from 'react-icons/ai';
 
 const MobileMenu: React.FC = () => {
   const isVisible = useSelector((state: RootState) => state.mobileMenu.isVisibleModal);
@@ -30,17 +32,22 @@ const MobileMenu: React.FC = () => {
     return (
       <div className={styles['mobile-menu']}>
         <div className={styles['mobile-menu__header']}>
-          <a onClick={hide} className={styles['header__close-button']} />
+          <a onClick={hide} className={styles['header__close-button']}>
+            <AiOutlineClose size={20} />
+          </a>
           <div className={styles['header__right-side']}>
-            {/* <div className={`${styles['header__search-button']} ${styles['header__button']}`} /> */}
             <a
               onClick={() => dispatch(setVisibleFavoritesModal(true))}
-              className={`${styles['header__favorites-button']} ${styles['header__button']}`}
-            />
+              className={styles['header__button']}
+            >
+              <AiOutlineHeart size={20} />
+            </a>
             <a
               href={`tel:+${CONTACT_PHONE_NUMBER.value}`}
-              className={`${styles['header__phone-call-button']} ${styles['header__button']}`}
-            />
+              className={styles['header__button']}
+            >
+              <FaPhone size={20} />
+            </a>
           </div>
         </div>
         <ul className={styles['mobile-menu__categories']}>
@@ -51,18 +58,15 @@ const MobileMenu: React.FC = () => {
           <li onClick={() => chooseCategory('Одноразки')}>Одноразки</li>
         </ul>
         <div className={styles['mobile-menu__social-networks']}>
-          <a
-            href={SOCIAL_MEDIA.instagram.href}
-            className={`${styles['social-networks__instagram']} ${styles['social-network']}`}
-          />
-          <a
-            href={SOCIAL_MEDIA.telegram.href}
-            className={`${styles['social-networks__telegram']} ${styles['social-network']}`}
-          />
-          <a
-            href={SOCIAL_MEDIA.vk.href}
-            className={`${styles['social-networks__vk']} ${styles['social-network']}`}
-          />
+          <a href={SOCIAL_MEDIA.instagram.href} className={styles['social-network']}>
+            <FaInstagram size={20} />
+          </a>
+          <a href={SOCIAL_MEDIA.telegram.href} className={styles['social-network']}>
+            <FaTelegram size={20} />
+          </a>
+          <a href={SOCIAL_MEDIA.vk.href} className={styles['social-network']}>
+            <FaVk size={20} />
+          </a>
         </div>
       </div>
     );

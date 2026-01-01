@@ -15,8 +15,12 @@
   }
 }
 
-.mainIcon:hover {
-  cursor: pointer;
+.mainIcon {
+  color: #990424;
+  
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .flexBasket {
@@ -59,11 +63,11 @@
       margin-bottom: 20px;
 
       .mobile-menu-icon {
-        display: block;
-        width: 20px;
-        height: 20px;
-        background-size: cover;
-        background-image: url('../../../image/mobile-menu-icon.png');
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #fff;
       }
     }
 

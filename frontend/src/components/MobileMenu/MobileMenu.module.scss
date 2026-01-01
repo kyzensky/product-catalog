@@ -13,29 +13,23 @@
     justify-content: space-between;
 
     .header__close-button {
-      background-image: url('../../image/mobile-menu-close-icon.png');
-      width: 20px;
-      height: 20px;
-      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #4f4f4f;
     }
     .header__right-side {
       display: flex;
+      align-items: center;
+      gap: 20px;
 
       .header__button {
-        width: 20px;
-        height: 20px;
-        background-size: cover;
-      }
-      .header__search-button {
-        background-image: url('../../image/mobile-menu-search-icon.png');
-        margin-right: 20px;
-      }
-      .header__favorites-button {
-        background-image: url('../../image/mobile-menu-favorites-icon.png');
-        margin-right: 20px;
-      }
-      .header__phone-call-button {
-        background-image: url('../../image/mobile-menu-phone-call-icon.png');
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #4f4f4f;
       }
     }
   }
@@ -56,22 +50,14 @@
   .mobile-menu__social-networks {
     margin-top: 50px;
     display: flex;
+    align-items: center;
+    gap: 22px;
 
     .social-network {
-      width: 20px;
-      height: 20px;
-      background-size: cover;
-    }
-    .social-networks__instagram {
-      background-image: url('../../image/inst-icon.png');
-      margin-right: 22px;
-    }
-    .social-networks__telegram {
-      background-image: url('../../image/tg-icon.png');
-      margin-right: 22px;
-    }
-    .social-networks__vk {
-      background-image: url('../../image/vk-icon.png');
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4f4f4f;
     }
   }
 }

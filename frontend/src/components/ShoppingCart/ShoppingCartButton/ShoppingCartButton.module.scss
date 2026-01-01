@@ -1,11 +1,12 @@
 .cart-button {
   &:hover {
-    border: 3px solid #990424;
+    background: black;
     cursor: pointer;
+    color: white;
   }
   border: 3px solid transparent;
   z-index: 9;
-  transition: 30ms;
+  transition: 0.5s;
   position: fixed;
   top: 300px;
   right: 47px;
@@ -17,18 +18,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #990424;
   .cart-button__icon {
-    width: 68px;
-    height: 68px;
-    background-image: url('../../../image/cart-icon.png');
-    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 .styled-num {
   font-family: Roboto;
   background: #990424;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 17px;
   font-weight: 500;
   border-radius: 12px;
@@ -60,8 +61,7 @@
     width: 61px;
     height: 61px;
     .cart-button__icon {
-      width: 32px;
-      height: 32px;
+      width: 30px;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_VISIBLE_MODAL } from '../../redux/shoppingCart';
 import { ShoppingCartButton } from './ShoppingCartButton/ShoppingCartButton';
@@ -20,9 +20,37 @@ const ShoppingCart = () => {
     []
   );
   const [items, setItems] = useState<CartItem[]>([]);
+  const prevIdsRef = useRef<string>('');
 
   useEffect(() => {
-    getProductsByIds(shoppingCart.map((p) => p.id)).then(data =>
+    // Запрашиваем товары только когда модалка открыта
+    if (!isVisible) {
+      return;
+    }
+
+    const productIds = shoppingCart.map((p) => p.id);
+    const idsString = productIds.join(',');
+
+    // Пропускаем, если ID не изменились
+    if (prevIdsRef.current === idsString && items.length > 0) {
+      // Обновляем количество из shoppingCart, если оно изменилось
+      setItems(prevItems => 
+        prevItems.map(item => {
+          const cartItem = shoppingCart.find((itm) => itm.id === item.id);
+          return cartItem ? { ...item, amount: cartItem.amount } : item;
+        })
+      );
+      return;
+    }
+
+    prevIdsRef.current = idsString;
+
+    if (productIds.length === 0) {
+      setItems([]);
+      return;
+    }
+
+    getProductsByIds(productIds).then(data =>
       setItems(
         data.map(v => {
           const cartItem = shoppingCart.find((itm) => itm.id === v.uuid);
@@ -33,13 +61,16 @@ const ShoppingCart = () => {
         })
       )
     );
-  }, [shoppingCart]);
+  }, [shoppingCart, isVisible, items.length]);
 
   return isVisible ? (
     <ShoppingCartModal
       onClose={() => dispatch({ type: SET_VISIBLE_MODAL, payload: false })}
-      itemsOnChange={(items) => {
-        setShoppingCart(items.map(item => ({ id: item.id, amount: item.amount })));
+      itemsOnChange={(updatedItems) => {
+        // Обновляем и localStorage, и локальное состояние items
+        const newShoppingCart = updatedItems.map(item => ({ id: item.id, amount: item.amount }));
+        setShoppingCart(newShoppingCart);
+        setItems(updatedItems);
       }}
       items={items}
     />

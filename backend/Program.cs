@@ -20,7 +20,9 @@ namespace EldudkaAPI
 
             builder.Services.AddControllers();
 
-            builder.Services.AddTransient<CSService>();
+            builder.Services.AddSingleton<CSService>();
+            builder.Services.AddSingleton<Services.ProductCacheService>();
+            builder.Services.AddHostedService(provider => provider.GetRequiredService<Services.ProductCacheService>());
 
             var app = builder.Build();
 

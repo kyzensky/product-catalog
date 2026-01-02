@@ -34,7 +34,7 @@ const HorizontalProductCardWithQuantitySwitch: React.FC<IProps> = ({
               }}
               className={`${styles['down-btn']} ${styles['change-amount-btn']}`}
             >
-              <FaMinus size={20} />
+              <FaMinus size={15} />
             </div>
             <div className={styles['value']}>
               <span>{quantityItem.amount}</span>
@@ -45,7 +45,7 @@ const HorizontalProductCardWithQuantitySwitch: React.FC<IProps> = ({
               }}
               className={`${styles['up-btn']} ${styles['change-amount-btn']}`}
             >
-              <FaPlus size={20} />
+              <FaPlus size={15} />
             </div>
           </div>
         )}

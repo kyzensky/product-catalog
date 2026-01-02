@@ -21,10 +21,6 @@ export interface ShoppingCartItem {
   amount: number;
 }
 
-export interface FavoriteItem {
-  id: string;
-}
-
 export interface CartProduct extends ProductDTO {
   amount: number;
 }

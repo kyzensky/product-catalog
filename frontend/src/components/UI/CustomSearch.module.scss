@@ -1,14 +1,16 @@
-@media (max-width: 1200px) {
-  .js-data-example-ajax {
-    width: 260px !important;
-  }
-}
-
 .input-wrapper {
   position: relative;
 
-  .js-data-example-ajax {
-    width: 20vw;
+  .search-container {
+    display: flex;
+    background: #990424;
+    border-radius: 6px;
+  }
+
+  .search-input {
+    width: 280px;
+    flex: 1;
+    min-width: 0;
     padding: 0 0 0 20px;
     display: block;
     border: 2px solid #990424;
@@ -16,9 +18,11 @@
     outline: none;
     background-color: #fbfbfb;
     border-radius: 6px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
-  input::placeholder {
+  .search-input::placeholder {
     font-family: Roboto, 'Comic Sans MS', normal;
     font-size: 14px;
     font-weight: 300;

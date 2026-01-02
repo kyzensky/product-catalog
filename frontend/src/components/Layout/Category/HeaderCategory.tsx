@@ -29,7 +29,7 @@ const HeaderCategory: React.FC = () => {
   };
 
   return (
-    <header className={classes.headerThird}>
+    <header className={classes.header}>
       <Container>
         <div className={classes.categoriesWrapper}>
           {categories.map((category, index) => {

@@ -1,19 +1,21 @@
 import * as React from 'react';
 import cn from 'classnames';
 import classes from './CustomSearch.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSearchData } from '../../redux/data/dataActions';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { filteredProductsBySearch } from '../../utils/filter';
+import { API_URL } from '../../utils/constants';
 import ButtonSearch from './ButtonSearch/ButtonSearch';
 import { RootState } from '../../redux/store';
+import { ProductDTO } from '../../types';
 
 const SelectSearch: React.FC = () => {
   const [openSearch, setOpenSearch] = React.useState<boolean>(false);
   const [searchText, setSearchText] = React.useState<string>('');
+  const [autocompleteData, setAutocompleteData] = React.useState<ProductDTO[] | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const { fullData, searchData } = useSelector((state: RootState) => state.data);
-  const dispatch = useDispatch();
+  const debounceTimerRef = React.useRef<NodeJS.Timeout | null>(null);
+  const { activeCategory } = useSelector((state: RootState) => state.data);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -30,9 +32,57 @@ const SelectSearch: React.FC = () => {
     };
   }, []);
 
+  // Сбрасываем текст поиска при изменении категории
+  React.useEffect(() => {
+    if (activeCategory && activeCategory !== 'default') {
+      setSearchText('');
+      setOpenSearch(false);
+      setAutocompleteData(null);
+      setIsLoading(false);
+    }
+  }, [activeCategory]);
+
+  const fetchAutocomplete = async (query: string) => {
+    if (!query.trim()) {
+      setAutocompleteData(null);
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${API_URL}/Product/Search?query=${encodeURIComponent(query)}&page=1&pageSize=10`
+      );
+      const data: ProductDTO[] = await response.json();
+      setAutocompleteData(data);
+    } catch (error) {
+      console.error('Error fetching autocomplete:', error);
+      setAutocompleteData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onChangeSearch = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchData(filteredProductsBySearch(fullData, target.value)));
-    setSearchText(target.value);
+    const value = target.value;
+    setSearchText(value);
+
+    // Debounce для автокомплита
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    if (value.length > 0) {
+      setAutocompleteData(null);
+      setIsLoading(false);
+      debounceTimerRef.current = setTimeout(() => {
+        fetchAutocomplete(value);
+      }, 300);
+    } else {
+      setAutocompleteData(null);
+      setIsLoading(false);
+    }
   };
 
   React.useEffect(() => {
@@ -40,27 +90,30 @@ const SelectSearch: React.FC = () => {
     setOpenSearch(isOpen);
   }, [searchText]);
 
-  console.log('text', searchText, 'open', openSearch);
   const onClickElementSearch = (id: string) => {
     setSearchText('');
     setOpenSearch(false);
+    setAutocompleteData(null);
+    setIsLoading(false);
     history.push(`/${id}`);
   };
 
   const onClickSearch = () => {
-    setOpenSearch(!openSearch);
+    if (searchText.length > 0) {
+      setOpenSearch(!openSearch);
+    }
   };
 
   return (
     <div className={classes['input-wrapper']}>
-      <div style={{ display: 'flex', background: '#990424', borderRadius: '6px' }}>
+      <div className={classes['search-container']}>
         <input
           ref={inputRef}
           onClick={onClickSearch}
           onChange={onChangeSearch}
           value={searchText}
           type="text"
-          className={classes['js-data-example-ajax']}
+          className={classes['search-input']}
           name="state"
           autoComplete="off"
           placeholder="Поиск"
@@ -68,12 +121,19 @@ const SelectSearch: React.FC = () => {
         <ButtonSearch
           searchText={searchText}
           setOpenSearch={setOpenSearch}
+          setSearchText={setSearchText}
         />
       </div>
       <div className={classes[cn({ search: openSearch === true })]}>
+        {openSearch && searchText.length > 0 && isLoading && (
+          <div className={classes['element-search']}>Загрузка...</div>
+        )}
         {openSearch &&
-          searchData &&
-          searchData.map((value) => {
+          searchText.length > 0 &&
+          !isLoading &&
+          autocompleteData !== null &&
+          autocompleteData.length > 0 &&
+          autocompleteData.map((value) => {
             return (
               <div
                 id={value.uuid}
@@ -85,8 +145,8 @@ const SelectSearch: React.FC = () => {
               </div>
             );
           })}
-        {openSearch && searchData.length <= 0 && (
-          <div className={classes['element-search']}>Ничего не найдено.</div>
+        {openSearch && searchText.length > 0 && !isLoading && autocompleteData !== null && autocompleteData.length === 0 && (
+          <div className={classes['element-search']}>Ничего не найдено</div>
         )}
       </div>
     </div>

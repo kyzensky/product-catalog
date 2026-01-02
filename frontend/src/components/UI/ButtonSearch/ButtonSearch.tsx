@@ -1,25 +1,29 @@
 import React from 'react';
 import classes from './ButtonSearch.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilterData } from '../../../redux/data/dataActions';
-import { filteredProductsBySearch } from '../../../utils/filter';
+import { useDispatch } from 'react-redux';
+import { setActiveCategory, searchProducts } from '../../../redux/data/dataActions';
 import { useHistory } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
+import { AppDispatch } from '../../../redux/store';
 
 interface ButtonSearchProps {
   searchText: string;
   setOpenSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ButtonSearch: React.FC<ButtonSearchProps> = ({ searchText, setOpenSearch }) => {
-  const dispatch = useDispatch();
+const ButtonSearch: React.FC<ButtonSearchProps> = ({ searchText, setOpenSearch, setSearchText }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
-  const { fullData } = useSelector(({ data }: any) => data);
 
   const onClickButtonSearch = () => {
-    dispatch(setFilterData(filteredProductsBySearch(fullData, searchText)));
+    if (!searchText.trim()) return;
+    
+    dispatch(setActiveCategory('default'));
+    dispatch(searchProducts(searchText.trim()));
     setOpenSearch(false);
-    history.push(``);
+    setSearchText('');
+    history.push('/');
   };
 
   return (

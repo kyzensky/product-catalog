@@ -6,17 +6,16 @@ const SOCIAL_MEDIA = {
     height: 21,
     href: 'https://instagram.com/eldudka_vapeshop?igshid=YmMyMTA2M2Y=',
   },
-  telegram: {
-    height: 21,
-    href: 'https://t.me/eldudka',
-  },
   vk: {
     height: 21,
     href: 'https://vk.com/vapestav',
   },
+  telegram: {
+    height: 21,
+    href: 'https://t.me/eldudka',
+  },
 };
 const LOCALSTORAGE_KEYS = {
-  favorites: 'favorites',
   shoppingCart: 'shoppingCart',
 };
 

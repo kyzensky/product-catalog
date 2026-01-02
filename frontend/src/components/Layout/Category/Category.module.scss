@@ -1,10 +1,11 @@
-.headerThird {
+.header {
   margin-top: 60px;
 
   .categoriesWrapper {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   .categoriesItem {
@@ -14,12 +15,16 @@
     width: 190px;
     height: 45px;
     cursor: pointer;
-    border-bottom: 2px solid transparent;
     text-decoration: none;
     color: #4f4f4f;
 
     &:hover {
       color: #bd1616;
+    }
+
+    &.active {
+      color: #bd1616;
+      cursor: default;
     }
 
     .categoriesItemName {
@@ -28,14 +33,27 @@
       font-size: 24px;
     }
   }
-
-  .categoriesItem.active {
-    border-bottom: 2px solid #990424;
-  }
 }
 
 @media (max-width: 860px) {
-  .headerThird {
-    display: none;
+  .header {
+    margin-top: 0px;
+
+    .categoriesWrapper {
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 10px;
+    }
+
+    .categoriesItem {
+      width: auto;
+      flex-shrink: 0;
+
+      .categoriesItemName {
+        font-size: 14px;
+      }
+    }
   }
 }
+
+

@@ -3,10 +3,19 @@
   justify-content: center;
   align-items: center;
   width: 75px;
-  background: '#990424';
-  border-radius: '6px';
+  flex-shrink: 0;
+  background: #990424;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .icon-search {
   color: white;
+}
+
+.button-search:hover {
+  background: #ac1b3a;
 }

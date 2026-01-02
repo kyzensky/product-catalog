@@ -1,10 +1,8 @@
 import * as React from 'react';
-import HeaderSearch from './HeaderSearch/HeaderSearch';
-import HeaderCategory from './HeaderCategory/HeaderCategory';
+import Header from './Header/Header';
 import { ShoppingCart } from '../ShoppingCart/ShoppingCart';
-import { FavoritesModal } from '../FavoritesModal/FavoritesModal';
-import { MobileMenu } from '../MobileMenu/MobileMenu';
 import Footer from './Footer/Footer';
+import classes from './Layout.module.scss';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,13 +10,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div style={{ background: '#fbfbfb' }}>
-      <HeaderSearch />
-      <HeaderCategory />
+    <div className={classes.layout}>
+      <Header />
       <ShoppingCart />
-      <FavoritesModal />
-      <MobileMenu />
-      {children}
+      <main className={classes.mainContent}>
+        {children}
+      </main>
       <Footer />
     </div>
   );

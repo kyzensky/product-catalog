@@ -2,14 +2,12 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import dataReducer from './data/dataReducer';
 import { shoppingCartReducer } from './shoppingCart';
-import { favoritesReducer } from './favorites';
 import { mobileMenuReducer } from './mobileMenu';
 import { AnyAction } from 'redux';
 
 const reducers = combineReducers({
   data: dataReducer,
   shoppingCart: shoppingCartReducer,
-  favorites: favoritesReducer,
   mobileMenu: mobileMenuReducer,
 });
 

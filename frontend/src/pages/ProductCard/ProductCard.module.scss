@@ -1,10 +1,10 @@
 .flex-block {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   padding: 90px 0 90px 0;
-  flex-direction: row;
+  gap: 40px;
 }
 
 .flex-block-center {
@@ -14,15 +14,33 @@
   margin-bottom: 50px;
 }
 
+.image-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
 .content-block {
   text-align: center;
+  width: 100%;
 }
 
 .image-card {
-  width: 455px;
-  height: 550px;
-  border-radius: 66px;
+  width: 220px;
+  height: 304px;
+  border-radius: 24px;
   object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+}
+
+.image-card-placeholder {
+  width: 220px;
+  height: 304px;
+  border-radius: 24px;
+  margin: 0 auto;
 }
 
 .product-name {
@@ -37,37 +55,10 @@
   margin: 30px 0 40px 0;
 }
 
-.button-favorites {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  box-shadow: 0px 5px 29px -7px rgba(0, 0, 0, 0.25);
-  background: #fdfdfd;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  margin-left: 30px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  .heart-icon {
-    width: 33px;
-    height: 33px;
-  }
-}
-
-.button-favorites.active {
-  border: 2px solid #990424;
-}
-
 .product-description {
-  text-align: left;
+  text-align: center;
   white-space: break-spaces;
   font: 400 16px 'Roboto';
-  text-align: center;
 }
 
 .location {
@@ -95,37 +86,9 @@
   color: #990424;
 }
 
-@media (max-width: 1200px) {
-  .flex-block {
-    flex-direction: column;
-  }
-
-  .image-card {
-    width: 240px;
-    height: 280px;
-  }
-
+@media (max-width: 860px) {
   .product-name {
-    margin-top: 28px;
-    font: 600 24px 'Roboto';
-  }
-
-  .product-price {
-    margin: 14px 0 21px 0;
-  }
-
-  .button-favorites {
-    width: 39px;
-    height: 39px;
-
-    .heart-icon {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  .location-availability {
-    font: 300 12px 'Roboto';
+    font: 600 14px 'Roboto';
   }
 
   .availability-shop-name {
@@ -137,6 +100,9 @@
   }
 
   .product-availability {
-    padding: 0 10px 0 10px;
+    padding: 0 10px;
+  }
+  .flex-block {
+    padding: 50px 0;
   }
 }

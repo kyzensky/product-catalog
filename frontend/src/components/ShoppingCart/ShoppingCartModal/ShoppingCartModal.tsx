@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { HorizontalProductCardWithQuantitySwitch } from '../../HorizontalProductCardWithQuantitySwitch/HorizontalProductCardWithQuantitySwitch';
 import { RightModal } from '../../RightModal/RightModal';
-import { CONTACT_PHONE_NUMBER, API_URL, WHATSAPP_URL } from '../../../utils/constants';
+import config from '../../../config';
 import styles from './ShoppingCartModal.module.scss';
 import { Button } from '../../Button/Button';
 import { CartProduct, CartItem, ProductDTO } from '../../../types';
 
 const getProductsByIds = async (ids: string[]): Promise<ProductDTO[]> => {
-  const response = await fetch(`${API_URL}/Product/GetByIds`, {
+  const response = await fetch(`${config.api.url}/Product/GetByIds`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(ids),
@@ -34,7 +34,7 @@ interface ShoppingCartModalProps {
 
 const ShoppingCartModal: React.FC<ShoppingCartModalProps> = ({ onClose, items, itemsOnChange }) => {
   const makeOrder = useCallback(() => {
-    let url = `${WHATSAPP_URL}/${CONTACT_PHONE_NUMBER.value}?text=`;
+    let url = `${config.whatsapp.url}/${config.contact.phone.value}?text=`;
     items.forEach(
       (item, index) =>
         (url += encodeURIComponent(`${index + 1}. ${item.name} - ${item.amount} шт | `))

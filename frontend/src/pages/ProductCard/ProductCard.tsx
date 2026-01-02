@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import { useParams } from 'react-router-dom';
-import { API_URL } from '../../utils/constants';
+import config from '../../config';
 import Container from '../../components/Container/Container';
-import { LOCALSTORAGE_KEYS } from '../../utils/constants';
 import { Button } from '../../components/Button/Button';
 import classes from './ProductCard.module.scss';
 import { ProductDTO } from '../../types';
@@ -12,15 +11,15 @@ import { MdLocationOn } from 'react-icons/md';
 
 const ProductCard: React.FC = () => {
   const [responseData, setResponseData] = useState<ProductDTO | null>(null);
-  const [shoppingCart, setShoppingCart] = useLocalStorage<ShoppingCartItem[]>(
-    LOCALSTORAGE_KEYS.shoppingCart,
-    []
-  );
+  const [shoppingCart, setShoppingCart] =       useLocalStorage<ShoppingCartItem[]>(
+        config.storage.keys.shoppingCart,
+        []
+      );
 
   const { card } = useParams<{ card: string }>();
 
   useEffect(() => {
-    fetch(`${API_URL}/Product/GetById?id=${card}`)
+        fetch(`${config.api.url}/Product/GetById?id=${card}`)
       .then((response) => response.json())
       .then((data: ProductDTO) => {
         setResponseData(data);

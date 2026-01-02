@@ -9,7 +9,7 @@ import {
   SET_SEARCH_QUERY,
   SET_CURRENT_PAGE,
 } from './dataTypes';
-import { API_URL } from '../../utils/constants';
+import config from '../../config';
 import { ProductDTO } from '../../types';
 import { AppDispatch } from '../store';
 
@@ -74,11 +74,11 @@ export const fetchProductsList = (page: number = 1, searchQuery: string = '', ca
   try {
     let url: string;
     if (searchQuery) {
-      url = `${API_URL}/Product/Search?query=${encodeURIComponent(searchQuery)}&page=${page}&pageSize=16`;
-    } else if (category && category !== 'default') {
-      url = `${API_URL}/Product/GetByCategory?category=${encodeURIComponent(category)}&page=${page}&pageSize=16`;
-    } else {
-      url = `${API_URL}/Product/GetList?page=${page}&pageSize=16`;
+        url = `${config.api.url}/Product/Search?query=${encodeURIComponent(searchQuery)}&page=${page}&pageSize=16`;
+      } else if (category && category !== 'default') {
+        url = `${config.api.url}/Product/GetByCategory?category=${encodeURIComponent(category)}&page=${page}&pageSize=16`;
+      } else {
+        url = `${config.api.url}/Product/GetList?page=${page}&pageSize=16`;
     }
     
     const data: ProductDTO[] = await fetch(url).then(

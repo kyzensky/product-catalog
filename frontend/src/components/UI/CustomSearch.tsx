@@ -3,7 +3,7 @@ import cn from 'classnames';
 import classes from './CustomSearch.module.scss';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { API_URL } from '../../utils/constants';
+import config from '../../config';
 import ButtonSearch from './ButtonSearch/ButtonSearch';
 import { RootState } from '../../redux/store';
 import { ProductDTO } from '../../types';
@@ -52,7 +52,7 @@ const SelectSearch: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `${API_URL}/Product/Search?query=${encodeURIComponent(query)}&page=1&pageSize=10`
+        `${config.api.url}/Product/Search?query=${encodeURIComponent(query)}&page=1&pageSize=10`
       );
       const data: ProductDTO[] = await response.json();
       setAutocompleteData(data);

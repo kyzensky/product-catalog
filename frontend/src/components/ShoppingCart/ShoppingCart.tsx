@@ -7,7 +7,7 @@ import {
   getProductsByIds,
   productMapping,
 } from './ShoppingCartModal/ShoppingCartModal';
-import { LOCALSTORAGE_KEYS } from '../../utils/constants';
+import config from '../../config';
 import { useLocalStorage } from 'usehooks-ts';
 import { ShoppingCartItem, CartItem } from '../../types';
 import { RootState } from '../../redux/store';
@@ -15,10 +15,10 @@ import { RootState } from '../../redux/store';
 const ShoppingCart = () => {
   const isVisible = useSelector((state: RootState) => state.shoppingCart.isVisibleModal);
   const dispatch = useDispatch();
-  const [shoppingCart, setShoppingCart] = useLocalStorage<ShoppingCartItem[]>(
-    LOCALSTORAGE_KEYS.shoppingCart,
-    []
-  );
+  const [shoppingCart, setShoppingCart] =       useLocalStorage<ShoppingCartItem[]>(
+        config.storage.keys.shoppingCart,
+        []
+      );
   const [items, setItems] = useState<CartItem[]>([]);
   const prevIdsRef = useRef<string>('');
 

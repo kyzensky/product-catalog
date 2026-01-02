@@ -2,7 +2,7 @@ import * as React from 'react';
 import Container from '../../Container/Container';
 import CustomSearch from '../../UI/CustomSearch';
 import classes from './Header.module.scss';
-import { SOCIAL_MEDIA, CONTACT_PHONE_NUMBER } from '../../../utils/constants';
+import config from '../../../config';
 import { Logo } from '../../Logo/Logo';
 import { FaInstagram, FaTelegram, FaVk, FaPhone } from 'react-icons/fa';
 
@@ -20,15 +20,15 @@ const Header: React.FC = () => {
           <div className={classes.mobileHeaderTop}>
             <Logo />
             <div className={classes.mobileIconsContainer}>
-              {Object.keys(SOCIAL_MEDIA).map((key, index) => {
-                const Icon = iconMap[key as keyof typeof iconMap];
+              {config.socialMedia && config.socialMedia.map((social, index) => {
+                const Icon = iconMap[social.name as keyof typeof iconMap];
                 return (
-                  <a key={index} href={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].href}>
+                  <a key={index} href={social.href}>
                     <Icon className={classes.mainIcon} size={21} />
                   </a>
                 );
               })}
-              <a href={`tel:+${CONTACT_PHONE_NUMBER.value}`}>
+              <a href={`tel:+${config.contact.phone.value}`}>
                 <FaPhone className={classes.mainIcon} size={21} />
               </a>
             </div>
@@ -44,15 +44,15 @@ const Header: React.FC = () => {
             <Logo />
             <CustomSearch />
             <div className={classes.iconsContainer}>
-              {Object.keys(SOCIAL_MEDIA).map((key, index) => {
-                const Icon = iconMap[key as keyof typeof iconMap];
+              {config.socialMedia && config.socialMedia.map((social, index) => {
+                const Icon = iconMap[social.name as keyof typeof iconMap];
                 return (
-                  <a key={index} href={SOCIAL_MEDIA[key as keyof typeof SOCIAL_MEDIA].href}>
+                  <a key={index} href={social.href}>
                     <Icon className={classes.mainIcon} size={21} />
                   </a>
                 );
               })}
-              <a href={`tel:+${CONTACT_PHONE_NUMBER.value}`}>
+              <a href={`tel:+${config.contact.phone.value}`}>
                 <FaPhone className={classes.mainIcon} size={21} />
               </a>
             </div>
